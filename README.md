@@ -56,7 +56,7 @@ Widgets draw through the `UiRenderer` interface and never touch NanoVG types dir
 
 ## Licences
 
-Strata is MIT. See [LICENSE](LICENSE).
+Strata has no License, don't reuse my code.
 
 The bundled **Manrope** typeface is licensed under the SIL Open Font License. Its
 licence ships alongside it at `src/client/resources/manrope-OFL.txt` and must remain
