@@ -1,0 +1,70 @@
+plugins {
+    // 26.1+ : 'net.fabricmc.fabric-loom', NOT the old 'fabric-loom'.
+    // This plugin does not remap, because the game ships unobfuscated.
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "strata" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    // No 'mappings' line: 26.1+ is unobfuscated and ships parameter names.
+
+    // Plain 'implementation', not 'modImplementation' -- nothing gets remapped now.
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // Only the modules we actually use, rather than the whole Fabric API bundle.
+    // The full bundle drags in Indigo, which replaces Minecraft's entire block render
+    // path and which Fabric flagged as possibly not ready for 26.1. A Gradle 'exclude'
+    // cannot remove it because fabric-api ships its modules jar-in-jar.
+    implementation fabricApi.module("fabric-lifecycle-events-v1", project.fabric_api_version)
+    // REQUIRED: without this Minecraft cannot see assets/ inside the mod at all,
+    // which silently breaks both the custom font and the shader pipelines.
+    implementation fabricApi.module("fabric-resource-loader-v0", project.fabric_api_version)
+
+    // NanoVG spike. Version must match the LWJGL core Minecraft already ships, or
+    // we end up with two LWJGL runtimes fighting over the same natives.
+    // NOTE: dev-only natives. Shipping requires jar-in-jar natives for every
+    // platform/arch combination we support.
+    implementation "org.lwjgl:lwjgl-nanovg:${project.lwjgl_version}"
+    runtimeOnly "org.lwjgl:lwjgl-nanovg:${project.lwjgl_version}:natives-windows"
+}
+
+processResources {
+    def version = project.version
+    inputs.property "version", version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+    it.options.encoding = 'UTF-8'
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}

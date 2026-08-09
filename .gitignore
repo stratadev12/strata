@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Dev client runtime: logs, saves, options and usercache all live here.
+# Contains your username and local world data -- never commit it.
+run/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Note: gradle/wrapper/gradle-wrapper.jar IS intentionally committed.
+# It is how the wrapper bootstraps on a fresh clone.

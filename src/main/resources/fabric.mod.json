@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "strata",
+  "version": "${version}",
+  "name": "Strata",
+  "description": "Modular client-side utility framework.",
+  "authors": [],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.strata.StrataClient"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "strata.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "fabric-lifecycle-events-v1": "*",
+    "fabric-resource-loader-v0": "*",
+    "minecraft": "~26.1",
+    "java": ">=25"
+  }
+}

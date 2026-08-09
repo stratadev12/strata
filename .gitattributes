@@ -1,0 +1,12 @@
+# Normalise to LF in the repository. Without this, gradlew is committed with CRLF
+# and fails to execute on macOS and Linux.
+* text=auto eol=lf
+
+gradlew     text eol=lf
+*.sh        text eol=lf
+gradlew.bat text eol=crlf
+*.cmd       text eol=crlf
+
+*.png  binary
+*.ttf  binary
+*.jar  binary
