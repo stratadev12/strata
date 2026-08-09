@@ -54,9 +54,9 @@ texture. The symptom is invisible text while shapes render fine, with no GL erro
 
 Widgets draw through the `UiRenderer` interface and never touch NanoVG types directly.
 
-## Licences
+## License
 
-Strata has no License, don't reuse my code.
+MIT License.
 
 The bundled **Manrope** typeface is licensed under the SIL Open Font License. Its
 licence ships alongside it at `src/client/resources/manrope-OFL.txt` and must remain
